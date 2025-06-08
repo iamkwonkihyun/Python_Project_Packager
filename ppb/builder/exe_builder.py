@@ -1,7 +1,6 @@
 import subprocess
 
 def exe_builder():
-    
     # 기본 명령어
     cmd = [
         "pyinstaller",
@@ -42,7 +41,7 @@ def exe_builder():
             cmd.append(f"--icon {input("icon path: ")}")
             break
         elif program_icon_input == "n":
-            pass
+            break
         else:
             print("잘못된 입력 값 입니다.")
             continue
