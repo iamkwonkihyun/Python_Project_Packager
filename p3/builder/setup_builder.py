@@ -1,8 +1,6 @@
-from jinja2 import Environment, FileSystemLoader, PackageLoader, select_autoescape
 import os
-from importlib.resources import files
-from pathlib import Path
-from ppb.builder.reqs_builder import reqs_builder
+from jinja2 import Environment, PackageLoader, select_autoescape
+from p3.builder.reqs_builder import reqs_builder
 
 def setup_builder():
     os.system('cls' if os.name == 'nt' else 'clear')

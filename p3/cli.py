@@ -1,6 +1,6 @@
-from ppb.builder.setup_builder import setup_builder
-from ppb.builder.exe_builder import exe_builder
-from ppb.builder.reqs_builder import reqs_builder
+from p3.builder.setup_builder import setup_builder
+from p3.builder.exe_builder import exe_builder
+from p3.builder.reqs_builder import reqs_builder
 
 def main():
     while True:
