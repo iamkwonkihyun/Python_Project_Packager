@@ -1,6 +1,13 @@
+import os
 import subprocess
 
+    
+
 def exe_builder():
+    # 화면 지우기
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print("## exe builder ##")
+    
     # 기본 명령어
     cmd = [
         "pyinstaller",

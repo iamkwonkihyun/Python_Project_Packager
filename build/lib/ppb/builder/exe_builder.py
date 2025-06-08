@@ -1,6 +1,12 @@
+import os
 import subprocess
 
+    
+
 def exe_builder():
+    # 화면 지우기
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print("## exe builder ##")
     
     # 기본 명령어
     cmd = [
@@ -42,7 +48,7 @@ def exe_builder():
             cmd.append(f"--icon {input("icon path: ")}")
             break
         elif program_icon_input == "n":
-            pass
+            break
         else:
             print("잘못된 입력 값 입니다.")
             continue

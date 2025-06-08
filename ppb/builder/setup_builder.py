@@ -1,8 +1,12 @@
-from jinja2 import Environment, FileSystemLoader
+from jinja2 import Environment, FileSystemLoader, PackageLoader, select_autoescape
 import os
+from importlib.resources import files
+from pathlib import Path
 from ppb.builder.reqs_builder import reqs_builder
 
 def setup_builder():
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print("## setup builder ##")
     
     # reqs 파일
     reqs_path = "requirements.txt"
@@ -67,11 +71,13 @@ def setup_builder():
         "entry_point": entry_point_input 
     }
     
-    
-    env = Environment(loader=FileSystemLoader('ppb/templates'))
+    env = Environment(
+    loader=PackageLoader('ppb', 'templates'),
+    autoescape=select_autoescape(['html', 'xml'])
+    )
     template = env.get_template('setup.py.j2')
-
+    
     rendered = template.render(context)
 
-    with open(os.path.join("/", "setup.py"), "w") as f:
+    with open("setup.py", "w") as f:
         f.write(rendered)
