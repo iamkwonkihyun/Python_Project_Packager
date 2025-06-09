@@ -4,7 +4,7 @@ from p3.builder.functions import qna_func, yes_or_no_func, clear_screen_func
 def exe_builder() -> None:
     """exe 빌더 함수"""
     
-    clear_screen_func("## exe builder ##")
+    clear_screen_func("### EXE BUILDER ###")
     
     # 기본 명령어
     cmd = [
@@ -43,7 +43,7 @@ def exe_builder() -> None:
     cmd.append("-c" if program_type == "cli" else "-w")
     cmd.append(f"-n {program_name}")
     if program_icon is not None:
-        cmd.append(f"--icon {program_icon}")
+        cmd.append(f"-i {program_icon}")
     
     # 명령어 실행
     subprocess.run(cmd)

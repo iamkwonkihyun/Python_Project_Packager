@@ -4,7 +4,7 @@ from p3.builder.reqs_builder import reqs_builder
 from p3.builder.functions import qna_func, yes_or_no_func, clear_screen_func
 
 def setup_builder() -> None:
-    clear_screen_func("## setup builder ##")
+    clear_screen_func("### SETUP BUILDER ###")
     
     # reqs 파일
     reqs_path = "requirements.txt"
