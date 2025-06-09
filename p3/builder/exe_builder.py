@@ -1,7 +1,6 @@
 import os
 import subprocess
-
-    
+from p3.builder.functions import qna_func, yes_or_no_func
 
 def exe_builder():
     # 화면 지우기
@@ -16,42 +15,38 @@ def exe_builder():
         "--clean",
     ]
     
-    # cli 프로그램이면 -c, gui 프로그램이면 -w
-    while True:
-        program_type_input = input("GUI or CLI?: ").strip().lower()
-        
-        if program_type_input not in ("gui", "cli"):
-            print("잘못된 입력 값 입니다.")
-            continue
-        else:
-            cmd.append("-c" if program_type_input == "cli" else "-w")
-            break
+    check = False
     
-    # 프로그램 name 옵션
-    while True:
-        program_name_input = input("program name: ")
-        check_program_name = input(f"\"{program_name_input}\" 정말 이걸로 하시겠습니까? (y/n): ").strip().lower()
-        if check_program_name == "y":
-            cmd.append(f"--name {program_name_input}")
-            break
-        elif check_program_name == "n":
-            continue
-        else:
-            print("잘못된 입력 값 입니다.")
-            continue
-    
-    # 아이콘 추가 옵션
-    while True:
-        program_icon_input = input("if you need add icon? (y/n): ")
+    while not check:
         
-        if program_icon_input == "y":
-            cmd.append(f"--icon {input("icon path: ")}")
-            break
-        elif program_icon_input == "n":
-            break
+        program_type = qna_func("GUI or CLI?: ", ["gui", "cli"])
+        python_file = qna_func("python file name: ")
+        program_name = qna_func("program name: ")
+        
+        if yes_or_no_func("Are you going to add an icon?:", default=False):
+            program_icon = qna_func("icon_path: ")
         else:
-            print("잘못된 입력 값 입니다.")
-            continue
+            program_icon = None
+        
+        exe_info = {
+        "program_type": program_type,
+        "python_file": python_file,
+        "program_name": program_name,
+        "program_icon": program_icon
+        }
+        
+        for item, answer in exe_info.items():
+            print(f"{item}: {answer}")
+            
+        check = yes_or_no_func("다시 한번 확인해주세요. 이걸로 결정하시겠습니까?")
+    
+    cmd.append(python_file)
+    cmd.append("-c" if program_type == "cli" else "-w")
+    cmd.append(f"-n {program_name}")
+    if program_icon is not None:
+        cmd.append(f"--icon {program_icon}")
     
     # 명령어 실행
     subprocess.run(cmd)
+
+exe_builder()

@@ -1,41 +1,19 @@
 from p3.builder.setup_builder import setup_builder
 from p3.builder.exe_builder import exe_builder
 from p3.builder.reqs_builder import reqs_builder
+from p3.builder.functions import qna_func, yes_or_no_func
 
 def main():
-    while True:
-        reqs_input = input("do you need requirements.txt? (y/n): ").strip().lower()
-        
-        if reqs_input in ("y", "n"):
-            reqs_input = True if reqs_input == "y" else False
-            break
-        else:
-            continue
+    reqs_input = yes_or_no_func("Do you need requirements.txt?")
+    setup_input = yes_or_no_func("Do you need add to setup.py?")
+    exe_input = yes_or_no_func("Do you need convert to exe?")
     
-    while True:
-        exe_input = input("do you need convert to exe? (y/n): ").strip().lower()
-        
-        if exe_input in ("y", "n"):
-            exe_input = True if exe_input == "y" else False
-            break
-        else:
-            continue
-    
-    while True:
-        setup_input = input("do you need add to setup.py? (y/n): ").strip().lower()
-        
-        if setup_input in ("y", "n"):
-            setup_input = True if setup_input == "y" else False
-            break
-        else:
-            continue
-    
-    # requirements.txt 생성
-    if reqs_input:
-        reqs_builder()
-    # exe로 빌드
-    if exe_input:
-        exe_builder()
-    # setup.py 생성
-    if setup_input:
-        setup_builder()
+    actions = [
+    (reqs_input, reqs_builder),
+    (setup_input, setup_builder),
+    (exe_input, exe_builder),
+    ]
+
+    for flag, func in actions:
+        if flag:
+            func()

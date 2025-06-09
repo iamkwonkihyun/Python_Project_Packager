@@ -1,6 +1,7 @@
 import os
 from jinja2 import Environment, PackageLoader, select_autoescape
 from p3.builder.reqs_builder import reqs_builder
+from p3.builder.functions import qna_func, yes_or_no_func
 
 def setup_builder():
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -13,64 +14,29 @@ def setup_builder():
     else:
         reqs_list = reqs_builder()
     
-    # 프로그램 이름
-    while True:
-        program_name_input = input("program name: ")
-        check_program_name = input(f"\"{program_name_input}\" 정말 이걸로 하시겠습니까? (y/n): ").strip().lower()
-        if check_program_name == "y":
-            break
-        elif check_program_name == "n":
-            continue
-        else:
-            print("잘못된 입력 값 입니다.")
-            continue
+    check = False
     
-    # 프로그램 버전
-    while True:
-        program_ver_input = input("program version: ")
-        check_program_ver = input(f"\"{program_ver_input}\" 정말 이걸로 하시겠습니까? (y/n): ").strip().lower()
-        if check_program_ver == "y":
-            break
-        elif check_program_ver == "n":
-            continue
-        else:
-            print("잘못된 입력 값 입니다.")
-            continue
+    while not check:
+        program_name = qna_func("program name: ")
+        program_ver = qna_func("program version: ")
+        cli_name = qna_func("cli name: ")
+        entry_point = qna_func("entry point: ")
     
-    # cli 이름
-    while True:
-        cli_name_input = input("cli name: ")
-        check_cli_name = input(f"\"{cli_name_input}\" 정말 이걸로 하시겠습니까? (y/n): ").strip().lower()
-        if check_cli_name == "y":
-            break
-        elif check_cli_name == "n":
-            continue
-        else:
-            print("잘못된 입력 값 입니다.")
-            continue
-    
-    # 시작 지점
-    while True:
-        entry_point_input = input("entry point(ex. main.py에 main함수이면 main:main): ")
-        check_entry_point = input(f"\"{entry_point_input}\" 맞으신가요? (y/n): ").strip().lower()
-        if check_entry_point == "y":
-            break
-        elif check_entry_point == "n":
-            continue
-        else:
-            print("잘못된 입력 값 입니다.")
-            continue
-    
-    context = {
-        "name": program_name_input,
-        "version": program_ver_input,
-        "requirements": reqs_list,
-        "cli_name": cli_name_input,
-        "entry_point": entry_point_input 
-    }
+        context = {
+            "name": program_name,
+            "version": program_ver,
+            "requirements": reqs_list,
+            "cli_name": cli_name,
+            "entry_point": entry_point
+        }
+        
+        for key, value in context.items():
+            print(f"{key}: {value}")
+        
+        check = yes_or_no_func("다시 한번 확인해주세요. 이걸로 결정하시겠습니까?: ")
     
     env = Environment(
-    loader=PackageLoader('ppb', 'templates'),
+    loader=PackageLoader('p3', 'templates'),
     autoescape=select_autoescape(['html', 'xml'])
     )
     template = env.get_template('setup.py.j2')
