@@ -7,8 +7,8 @@
 > ## How to Start?
 >
 > > -   레포를 클론합니다
-> > -   터미널을 열어 클론한 폴더가 있는 경로까지 갑니다.
-> > -   Windows: `pip install .` Mac: `pip3 install .  `을 실행합니다.
+> > -   터미널을 관리자 권한으로 열어 클론한 폴더가 있는 경로까지 갑니다.
+> > -   Windows: `python -m pip install .` Mac: `python3 -m pip install .`을 실행합니다.
 > > -   다운로드가 다 되었으면 `p3`로 실행하면
 > > -   FINISH.
 >
