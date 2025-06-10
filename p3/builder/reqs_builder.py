@@ -7,9 +7,9 @@ def reqs_builder(exist: bool = False) -> list[str]:
     Returns:
         list[str]: requirements.txt의 list
     """
-    clear_screen_func("### REQUIREMENTS BUILDER ###")
     
     if not exist:
+        clear_screen_func("### REQUIREMENTS BUILDER ###")
         subprocess.run(["pipreqs", ".", "--encoding=utf-8", "--force"])
     
     with open("requirements.txt", "r") as f:

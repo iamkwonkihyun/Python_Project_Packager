@@ -1,3 +1,4 @@
+import os
 import subprocess
 from p3.builder.functions import qna_func, yes_or_no_func, clear_screen_func
 
@@ -23,7 +24,7 @@ def exe_builder() -> None:
         program_name = qna_func("program name: ")
         
         if yes_or_no_func("Are you going to add an icon?: ", default=False):
-            program_icon = qna_func("icon_path: ")
+            program_icon = qna_func("icon_path: ").strip()
         else:
             program_icon = None
         
@@ -34,16 +35,19 @@ def exe_builder() -> None:
         "program_icon": program_icon
         }
         
+        clear_screen_func("### EXE BUILDER ###")
+        
         for item, answer in exe_info.items():
             print(f"{item}: {answer}")
-            
+        
         check = yes_or_no_func("다시 한번 확인해주세요. 이걸로 결정하시겠습니까?: ")
     
     cmd.append(python_file)
     cmd.append("-c" if program_type == "cli" else "-w")
     cmd.append(f"-n {program_name}")
     if program_icon is not None:
-        cmd.append(f"-i {program_icon}")
+        abs_icon_path = os.path.abspath(program_icon)
+        cmd.append(f"-i {abs_icon_path}")
     
     # 명령어 실행
     subprocess.run(cmd)
